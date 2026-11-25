@@ -1,17 +1,28 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
-const OUTPUT_PATH: string = process.argv[2] ?? "/output/entry.txt";
+function resolveOutputPath(argv: string[]): string {
+  const flagIndex = argv.indexOf("--out");
+  if (flagIndex !== -1 && argv[flagIndex + 1]) {
+    return argv[flagIndex + 1];
+  }
+  return "/output/entry.txt";
+}
 
-// Round 1 working candidate (pre-tournament baseline).
+const OUTPUT_PATH: string = resolveOutputPath(process.argv.slice(2));
+
+// Generation-2 tournament champion (67 bytes, pure ASCII, single line).
 const ONE_LINER: string =
-  "My anesthesiologist had me count back from ten, and at seven he asked my mother's maiden name.";
+  "I built an AI to call my mom on Sundays, and she left it the house.";
 
 function buildEntry(raw: string): string {
   const line = raw.replace(/\s+/g, " ").trim();
   const charCount = Array.from(line).length;
   if (charCount < 1 || charCount > 140) {
     throw new Error(`Invalid entry length: ${charCount} chars (expected 1..140)`);
+  }
+  if (/[\r\n]/.test(line)) {
+    throw new Error("Entry must be a single line without line breaks");
   }
   return line;
 }
