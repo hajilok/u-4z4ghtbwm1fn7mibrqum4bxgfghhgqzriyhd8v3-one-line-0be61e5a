@@ -11,9 +11,9 @@ function resolveOutputPath(argv: string[]): string {
 
 const OUTPUT_PATH: string = resolveOutputPath(process.argv.slice(2));
 
-// Generation-2 tournament champion (67 bytes, pure ASCII, single line).
+// Round-2 recovery champion G3-07a (70 bytes, pure ASCII, single line).
 const ONE_LINER: string =
-  "I built an AI to call my mom on Sundays, and she left it the house.";
+  "I've inspected 400 bridges and never failed one; I hate confrontation.";
 
 function buildEntry(raw: string): string {
   const line = raw.replace(/\s+/g, " ").trim();
